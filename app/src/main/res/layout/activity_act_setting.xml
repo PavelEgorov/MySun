@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activitys.Act_setting">
+
+    <RadioGroup
+        android:id="@+id/rg_sensor"
+        android:layout_width="300dp"
+        android:layout_height="234dp"
+        android:checkedButton="@id/rb_location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.08">
+
+        <TextView
+            android:id="@+id/tv_settings"
+            style="@style/settings_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings" />
+
+        <RadioButton
+            android:id="@+id/rb_city_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/use_city_name" />
+
+        <RadioButton
+            android:id="@+id/rb_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/use_location" />
+
+        <RadioButton
+            android:id="@+id/rb_sensor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/use_sensor" />
+
+        <EditText
+            android:id="@+id/et_country"
+            android:layout_width="375dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:enabled="false"
+            android:hint="@string/country"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/et_city"
+            android:layout_width="375dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:enabled="false"
+            android:hint="@string/city"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/rg_language"
+        android:layout_width="300dp"
+        android:layout_height="131dp"
+        android:checkedButton="@id/rb_english"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rg_sensor"
+        app:layout_constraintVertical_bias="0.03">
+
+        <TextView
+            android:id="@+id/tv_language"
+            style="@style/settings_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language" />
+
+        <RadioButton
+            android:id="@+id/rb_english"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/english" />
+
+        <RadioButton
+            android:id="@+id/rb_russian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/russian" />
+
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
