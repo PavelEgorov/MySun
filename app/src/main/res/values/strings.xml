@@ -11,4 +11,5 @@
     <string name="language">language</string>
     <string name="english">english</string>
     <string name="russian">russian</string>
+    <string name="back">back</string>
 </resources>

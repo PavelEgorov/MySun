@@ -10,4 +10,5 @@
     <string name="language">язык</string>
     <string name="english">english</string>
     <string name="russian">русский</string>
+    <string name="back">назад</string>
 </resources>

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.egorovsoft.mysun.MainPresenter;
+
 public class SPreference {
     private static final String TAG = "SPreference";
 
@@ -37,7 +39,36 @@ public class SPreference {
         sharedPreferences = context.getSharedPreferences(this.name, context.MODE_PRIVATE);
     }
 
-    public void apply(int settings, int language, String country, String city){
+    public void commit(int settings, int language, String country, String city){
+        Log.d(TAG, "commit: ");
 
+        sharedPreferences.edit().putString(COUNTRY, country).commit();
+        sharedPreferences.edit().putString(CITY, city).commit();
+        sharedPreferences.edit().putInt(USE_SETTINGS, settings).commit();
+        sharedPreferences.edit().putInt(USE_LANGUAGE, language).commit();
+    }
+
+    public String readCity(){
+        Log.d(TAG, "readCity: ");
+
+        return sharedPreferences.getString(CITY, "");
+    }
+
+    public String readCountry(){
+        Log.d(TAG, "readCountry: ");
+
+        return sharedPreferences.getString(COUNTRY, "");
+    }
+
+    public int readSettings(){
+        Log.d(TAG, "readSettings: ");
+
+        return sharedPreferences.getInt(USE_SETTINGS,  MainPresenter.USE_LOCATION);
+    }
+
+    public int readLanguage(){
+        Log.d(TAG, "readLanguage: ");
+
+        return sharedPreferences.getInt(USE_LANGUAGE, MainPresenter.LN_ENGLISH);
     }
 }

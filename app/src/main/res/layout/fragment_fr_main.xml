@@ -11,6 +11,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_city"
+            style="@style/second_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error"
+            android:textAlignment="center" />
+
+        <TextView
             android:id="@+id/tv_temp"
             style="@style/first_data"
             android:layout_width="match_parent"
