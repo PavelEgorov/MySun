@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name" translatable="false">MySun</string>
+
+    <string name="error">error</string>
+    <string name="country">country</string>
+    <string name="city">city</string>
+    <string name="use_city_name">use city name</string>
+    <string name="use_sensor">use sensor</string>
+    <string name="use_location">use location</string>
+    <string name="settings">settings</string>
+    <string name="language">language</string>
+    <string name="english">english</string>
+    <string name="russian">russian</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="first_data">
+        <item name="android:textSize">36dp</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="second_data">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="settings_group">
+        <item name="android:textSize">32dp</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error">ошибка</string>
+    <string name="country">страна</string>
+    <string name="city">город</string>
+    <string name="use_city_name">поиск по городу</string>
+    <string name="use_sensor">использовать сенсоры</string>
+    <string name="use_location">использовать геолокацию</string>
+    <string name="settings">настройки</string>
+    <string name="language">язык</string>
+    <string name="english">english</string>
+    <string name="russian">русский</string>
+</resources>
