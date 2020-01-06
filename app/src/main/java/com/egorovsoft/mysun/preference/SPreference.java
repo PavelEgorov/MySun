@@ -14,6 +14,8 @@ public class SPreference {
     private static final String COUNTRY = "country";
     private static final String USE_SETTINGS = "use_settings";
     private static final String USE_LANGUAGE = "language";
+    private static final String PM_INTERNET = "pm_internet";
+    private static final String PM_LOCATION = "pm_location";
 
     private String name;
     private SharedPreferences sharedPreferences;
@@ -46,6 +48,9 @@ public class SPreference {
         sharedPreferences.edit().putString(CITY, city).commit();
         sharedPreferences.edit().putInt(USE_SETTINGS, settings).commit();
         sharedPreferences.edit().putInt(USE_LANGUAGE, language).commit();
+
+        sharedPreferences.edit().putBoolean(PM_INTERNET, MainPresenter.getInstance().isPermission_enternet()).commit();
+        sharedPreferences.edit().putBoolean(PM_LOCATION, MainPresenter.getInstance().isPermission_location()).commit();
     }
 
     public String readCity(){
@@ -63,12 +68,24 @@ public class SPreference {
     public int readSettings(){
         Log.d(TAG, "readSettings: ");
 
-        return sharedPreferences.getInt(USE_SETTINGS,  MainPresenter.USE_LOCATION);
+        return sharedPreferences.getInt(USE_SETTINGS,  MainPresenter.USE_SENSOR);
     }
 
     public int readLanguage(){
         Log.d(TAG, "readLanguage: ");
 
         return sharedPreferences.getInt(USE_LANGUAGE, MainPresenter.LN_ENGLISH);
+    }
+
+    public boolean readPermissionInternet(){
+        Log.d(TAG, "readPermissionInternet: ");
+
+        return sharedPreferences.getBoolean(PM_INTERNET, false);
+    }
+
+    public boolean readPermissionLocation(){
+        Log.d(TAG, "readPermissionInternet: ");
+
+        return sharedPreferences.getBoolean(PM_LOCATION, false);
     }
 }

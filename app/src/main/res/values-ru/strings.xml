@@ -11,4 +11,6 @@
     <string name="english">english</string>
     <string name="russian">русский</string>
     <string name="back">назад</string>
+    <string name="wind">скорость ветра (м/с): </string>
+    <string name="humidity">влажность (%): </string>
 </resources>

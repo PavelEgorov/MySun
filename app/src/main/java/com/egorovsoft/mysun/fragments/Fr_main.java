@@ -1,11 +1,7 @@
 package com.egorovsoft.mysun.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +11,8 @@ import android.widget.TextView;
 import com.egorovsoft.mysun.R;
 import com.egorovsoft.mysun.observers.Observer;
 import com.egorovsoft.mysun.observers.Publisher;
+
+import androidx.fragment.app.Fragment;
 
 public class Fr_main extends Fragment implements Observer {
     private final static String TAG = "Fr_main";
@@ -65,5 +63,26 @@ public class Fr_main extends Fragment implements Observer {
         Log.d(TAG, "updateCity: ");
 
         ((TextView)getActivity().findViewById(R.id.tv_city)).setText(text);
+    }
+
+    @Override
+    public void updateTemperature(String text) {
+        Log.d(TAG, "updateTemperature: ");
+
+        ((TextView)getActivity().findViewById(R.id.tv_temp)).setText(text);
+    }
+
+    @Override
+    public void updateHumidity(String text) {
+        Log.d(TAG, "updateHumidity: ");
+
+        ((TextView)getActivity().findViewById(R.id.tv_humidity)).setText(getResources().getString(R.string.humidity) + text);
+    }
+
+    @Override
+    public void updateWind(String text) {
+        Log.d(TAG, "updateWind: ");
+
+        ((TextView)getActivity().findViewById(R.id.tv_wind)).setText(getResources().getString(R.string.wind) + text);
     }
 }

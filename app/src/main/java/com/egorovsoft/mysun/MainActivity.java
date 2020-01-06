@@ -1,9 +1,5 @@
 package com.egorovsoft.mysun;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.egorovsoft.mysun.activitys.Act_setting;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = "MainActivity";
@@ -21,8 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
         ///{{ Загружаем настройки
         MainPresenter.getInstance().loadPreference(this);
+
         ///{{ Запускаем сервисы
-        MainPresenter.getInstance().startServices();
+        MainPresenter.getInstance().startServices(this.getApplicationContext());
 
         super.onCreate(savedInstanceState);
 
@@ -60,11 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.d(TAG, "onActivityResult: ");
+        Log.d(TAG, "onActivityResult: resultCode: " + resultCode + " requestCode: " + requestCode);
 
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode != RESULT_OK) return;
 
         if (requestCode == MainPresenter.RESULT_CODE_SETTINGS) {
             Log.d(TAG, "onActivityResult: RESULT_CODE_SETTINGS");
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         Log.d(TAG, "onStop: ");
 
-        MainPresenter.getInstance().stopServices();
+        MainPresenter.getInstance().stopServices(this.getApplicationContext());
         super.onStop();
     }
 

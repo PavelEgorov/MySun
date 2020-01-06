@@ -12,4 +12,6 @@
     <string name="english">english</string>
     <string name="russian">russian</string>
     <string name="back">back</string>
+    <string name="wind">wind speed (m/s): </string>
+    <string name="humidity">humidity (%): </string>
 </resources>

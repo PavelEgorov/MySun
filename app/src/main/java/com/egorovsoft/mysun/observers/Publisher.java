@@ -40,4 +40,22 @@ public class Publisher {
             observer.updateCity(text);
         }
     }
+
+    public void notifyTemperature(String text) {
+        for (Observer observer : observers) {
+            observer.updateTemperature(text);
+        }
+    }
+
+    public void notifyHumidity(String text) {
+        for (Observer observer : observers) {
+            observer.updateHumidity(text);
+        }
+    }
+
+    public void notifyWind(String text) {
+        for (Observer observer : observers) {
+            observer.updateWind(text);
+        }
+    }
 }

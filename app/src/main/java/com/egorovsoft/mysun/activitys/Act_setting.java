@@ -1,6 +1,5 @@
 package com.egorovsoft.mysun.activitys;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +8,9 @@ import android.widget.RadioButton;
 
 import com.egorovsoft.mysun.MainPresenter;
 import com.egorovsoft.mysun.R;
+import com.egorovsoft.mysun.permissions.Permission;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Act_setting extends AppCompatActivity {
 
@@ -37,7 +39,8 @@ public class Act_setting extends AppCompatActivity {
         rb_city_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setEnabled(true);
+                checkPermission();
+                updateVisible();
             }
         });
 
@@ -45,7 +48,8 @@ public class Act_setting extends AppCompatActivity {
         rb_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setEnabled(false);
+                checkPermission();
+                updateVisible();
             }
         });
 
@@ -53,7 +57,7 @@ public class Act_setting extends AppCompatActivity {
         rb_sensor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setEnabled(false);
+                updateVisible();
             }
         });
 
@@ -74,14 +78,28 @@ public class Act_setting extends AppCompatActivity {
     protected void onStop() {
         Log.d(TAG, "onStop: ");
 
-        saveData();
         super.onStop();
+    }
+
+    private void checkPermission() {
+        if ((MainPresenter.getInstance().getCurrentSettings() == MainPresenter.USE_LOCATION
+            || MainPresenter.getInstance().getCurrentSettings() == MainPresenter.USE_CITY)
+            && !MainPresenter.getInstance().isPermission_enternet()){
+            Permission permission = new Permission();
+            permission.checkPermissionInternet(this);
+        }
+        if (MainPresenter.getInstance().getCurrentSettings() == MainPresenter.USE_LOCATION
+                && !MainPresenter.getInstance().isPermission_location()){
+            Permission permission = new Permission();
+            permission.checkPermissionLoacation(this);
+        }
     }
 
     @Override
     public void onBackPressed() {
         Log.d(TAG, "onBackPressed: ");
 
+        saveData();
         super.onBackPressed();
     }
 
