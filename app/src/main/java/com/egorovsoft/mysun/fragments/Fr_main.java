@@ -85,4 +85,14 @@ public class Fr_main extends Fragment implements Observer {
 
         ((TextView)getActivity().findViewById(R.id.tv_wind)).setText(getResources().getString(R.string.wind) + text);
     }
+
+    @Override
+    public void updateDescription(String text) {
+        Log.d(TAG, "updateDescription: ");
+
+        int resid = getResources().getIdentifier(text, "string", "com.egorovsoft.mysun");
+        ((TextView)getActivity().findViewById(R.id.tv_description)).setText(
+                resid != 0? getResources().getText(resid):text
+        );
+    }
 }

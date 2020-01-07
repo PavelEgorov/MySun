@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.egorovsoft.mysun.observers.Publisher;
 import com.egorovsoft.mysun.preference.SPreference;
+import com.egorovsoft.mysun.recyclers.Rv_Five_Days;
+import com.egorovsoft.mysun.services.api.Citys;
 import com.egorovsoft.mysun.services.currentdata.UpdateWheatherService;
 
 public class MainPresenter {
@@ -40,6 +42,8 @@ public class MainPresenter {
     private double currentLatitude;
     private double currentLongitude;
 
+    private String currentDescription;
+
     private Intent intentService;
 
     private Handler handler;
@@ -52,6 +56,11 @@ public class MainPresenter {
 
     private boolean permission_enternet;
     private boolean permission_location;
+
+    private Citys citys;
+
+    private boolean five_day;
+    private Rv_Five_Days[] rv_five_days;
 
     private MainPresenter(){
         Log.d(TAG, "MainPresenter: ");
@@ -74,6 +83,9 @@ public class MainPresenter {
 
         permission_enternet = false;
         permission_location = false;
+
+        five_day = false;
+        rv_five_days = new Rv_Five_Days[5];
 
         needLoadPreference = true;
     }
@@ -361,6 +373,18 @@ public class MainPresenter {
         }
     }
 
+    public String getCurrentDescription() {
+        Log.d(TAG, "getCurrentDescription: " + currentDescription);
+        return currentDescription;
+    }
+
+    public void setCurrentDescription(String currentDescription) {
+        Log.d(TAG, "setCurrentDescription: " + currentDescription);
+        synchronized (sync) {
+            this.currentDescription = currentDescription;
+        }
+    }
+
     public void updateActivity() {
         Log.d(TAG, this.toString() + " updateActivity: ");
         ///{{ Обновляем активити
@@ -368,6 +392,7 @@ public class MainPresenter {
         String str_temperature = String.format("%.1f", getTemperature()) + "°C";
         String str_humidity = String.format("%d",getHumidity());
         String str_wind = String.format("%.1f",getWind());
+        String str_description = getCurrentDescription();
 
         int err = getError();
         if (!(err >= 200 && err<=299)){
@@ -375,11 +400,59 @@ public class MainPresenter {
             str_temperature = String.format("%d",err);
             str_humidity = "";
             str_wind = "";
+            str_description = "";
         }
 
         Publisher.getInstance().notifyCity(str_city);
         Publisher.getInstance().notifyTemperature(str_temperature);
         Publisher.getInstance().notifyHumidity(str_humidity);
         Publisher.getInstance().notifyWind(str_wind);
+        Publisher.getInstance().notifyDescription(str_description);
+    }
+
+    public void loadCitys(Context context) {
+        Log.d(TAG, "loadCitys: ");
+
+        ///{{ Файл большой, плохая идея его кажый раз грузить, нужен запрос на сайт и выборка частичная(например по геолокации)
+        /// Либо нужно попробовать обратиться к файлу через ретрофит. Пока идею с выпадающим списком городов оставлю.
+        /// т.к. нет понимания оптимального решения
+
+//        try {
+//            String file_citys = FileReader.readFile(context, R.raw.city);
+//            Gson gson = new Gson();
+//            citys = gson.fromJson(file_citys, Citys.class);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    public Citys getCitys(){
+        Log.d(TAG, this.toString() + " getCitys: ");
+
+        return this.citys;
+    }
+
+    public boolean isFive_day() {
+        Log.d(TAG, this.toString() + " isFive_day: " + five_day);
+
+        return five_day;
+    }
+
+    public void setFive_day(boolean five_day) {
+        Log.d(TAG, this.toString() + " setFive_day: " + five_day);
+
+        this.five_day = five_day;
+    }
+
+    public Rv_Five_Days[] getRv_five_days() {
+        Log.d(TAG, this.toString() + " getRv_five_days: ");
+
+        return rv_five_days;
+    }
+
+    public void setRv_five_days(Rv_Five_Days[] rv_five_days) {
+        Log.d(TAG, this.toString() + " setRv_five_days: ");
+
+        this.rv_five_days = rv_five_days;
     }
 }

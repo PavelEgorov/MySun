@@ -15,7 +15,6 @@
             style="@style/second_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/error"
             android:textAlignment="center" />
 
         <TextView
@@ -27,11 +26,17 @@
             android:textAlignment="center" />
 
         <TextView
+            android:id="@+id/tv_description"
+            style="@style/second_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center" />
+
+        <TextView
             android:id="@+id/tv_wind"
             style="@style/second_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/error"
             android:textAlignment="center" />
 
         <TextView
@@ -39,7 +44,6 @@
             style="@style/second_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/error"
             android:textAlignment="center" />
     </LinearLayout>
 </FrameLayout>

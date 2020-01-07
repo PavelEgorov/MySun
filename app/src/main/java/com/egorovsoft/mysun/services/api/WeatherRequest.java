@@ -9,6 +9,16 @@ public class WeatherRequest {
     private String name;
     private Sys sys;
 
+    public String getDt_txt() {
+        return dt_txt;
+    }
+
+    public void setDt_txt(String dt_txt) {
+        this.dt_txt = dt_txt;
+    }
+
+    private String dt_txt;
+
     public Sys getSys() {
         return sys;
     }

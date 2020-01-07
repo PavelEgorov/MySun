@@ -3,6 +3,7 @@ package com.egorovsoft.mysun.services.connections;
 import android.util.Log;
 
 import com.egorovsoft.mysun.MainPresenter;
+import com.egorovsoft.mysun.services.api.Weather;
 import com.egorovsoft.mysun.services.api.WeatherRequest;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class ConnectionToWheatherServer {
 
     private String city_name;
     private String country_code;
+    private String description;
 
     private float temperature;
     private int pressure;
@@ -113,6 +115,11 @@ public class ConnectionToWheatherServer {
         humidity = weatherRequest.getMain().getHumidity();
         windSpeed = weatherRequest.getWind().getSpeed();
         error_message = error_code;
+        if (weatherRequest.getWeather().length != 0) {
+            Weather weather = weatherRequest.getWeather()[0];
+            ///{{ нужно будет сделать перевод в зависимости от локали. Если успею
+            description = weather.getMain();
+        }else description = "";
 
         updateActivity();
     }
@@ -126,6 +133,7 @@ public class ConnectionToWheatherServer {
         MainPresenter.getInstance().setHumidity(humidity);
         MainPresenter.getInstance().setWind(windSpeed);
         MainPresenter.getInstance().setError(error_message);
+        MainPresenter.getInstance().setCurrentDescription(description);
     }
 
     public void close() {

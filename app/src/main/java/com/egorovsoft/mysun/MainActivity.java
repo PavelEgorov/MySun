@@ -1,6 +1,7 @@
 package com.egorovsoft.mysun;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -8,11 +9,14 @@ import android.view.MenuItem;
 
 import com.egorovsoft.mysun.activitys.Act_setting;
 
+import java.util.Locale;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = "MainActivity";
+    private Locale locale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
 
         ///{{ Запускаем сервисы
         MainPresenter.getInstance().startServices(this.getApplicationContext());
+
+        if (MainPresenter.getInstance().getCurrentLanguage() == MainPresenter.LN_ENGLISH) locale = new Locale("en");
+        if (MainPresenter.getInstance().getCurrentLanguage() == MainPresenter.LN_RUSSIAN) locale = new Locale("ru");
+
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration, null);
 
         super.onCreate(savedInstanceState);
 
@@ -63,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onActivityResult: resultCode: " + resultCode + " requestCode: " + requestCode);
 
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK) return;
 
         if (requestCode == MainPresenter.RESULT_CODE_SETTINGS) {
             Log.d(TAG, "onActivityResult: RESULT_CODE_SETTINGS");

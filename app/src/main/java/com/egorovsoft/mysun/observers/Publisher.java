@@ -58,4 +58,10 @@ public class Publisher {
             observer.updateWind(text);
         }
     }
+
+    public void notifyDescription(String text) {
+        for (Observer observer : observers) {
+            observer.updateDescription(text);
+        }
+    }
 }

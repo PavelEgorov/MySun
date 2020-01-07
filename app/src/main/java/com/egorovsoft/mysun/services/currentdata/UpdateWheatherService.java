@@ -89,6 +89,7 @@ public class UpdateWheatherService extends Service {
                         if (useLocation == MainPresenter.USE_SENSOR) {
                             Log.d(TAG, "run: USE_SENSOR");
                             MainPresenter.getInstance().setWind(0); /// Нет датчика ветра
+                            MainPresenter.getInstance().setCurrentDescription("");
 
                             if (TemperatureSensor.getInstance(getApplicationContext()).phoneHaveSensor()
                                     && !TemperatureSensor.getInstance(getApplicationContext()).isActive()) {

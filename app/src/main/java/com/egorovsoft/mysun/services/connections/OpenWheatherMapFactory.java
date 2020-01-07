@@ -8,6 +8,7 @@ import retrofit2.http.Query;
 
 //    q={название города}, {код страны}
 //    Пример итогового запроса: api.openweathermap.org/data/2.5/weather?q=London,uk&units=metric&appid=37a0b47b7c853559bc683f29de620736
+//    api.openweathermap.org/data/2.5/forecast для погоды на 5 дней
 
 interface OpenWheatherMapFactory {
     @GET("data/2.5/weather")
@@ -15,4 +16,10 @@ interface OpenWheatherMapFactory {
 
     @GET("data/2.5/weather")
     Call<WeatherRequest> refreshDataRetrofitLocation(@Query("lat") String lat, @Query("lon") String lon, @Query("units") String units, @Query("appid") String appid);
+
+    @GET("data/2.5/forecast")
+    Call<WeatherRequest> refreshDataRetrofitForecast(@Query("q") String q, @Query("units") String units, @Query("appid") String appid);
+
+    @GET("data/2.5/forecast")
+    Call<WeatherRequest> refreshDataRetrofitLocationForecast(@Query("lat") String lat, @Query("lon") String lon, @Query("units") String units, @Query("appid") String appid);
 }

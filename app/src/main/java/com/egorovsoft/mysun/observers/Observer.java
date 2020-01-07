@@ -5,4 +5,5 @@ public interface Observer {
     void updateTemperature(String text);
     void updateHumidity(String text);
     void updateWind(String text);
+    void updateDescription(String text);
 }

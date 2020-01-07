@@ -1,5 +1,6 @@
 package com.egorovsoft.mysun.activitys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -117,6 +118,9 @@ public class Act_setting extends AppCompatActivity {
         MainPresenter.getInstance().setCurrentCountry(et_Country.getText().toString());
 
         MainPresenter.getInstance().savePreference(this);
+
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
     }
 
     private void loadData() {
@@ -150,6 +154,12 @@ public class Act_setting extends AppCompatActivity {
 
         et_City.setText(MainPresenter.getInstance().getCurrentCity());
         et_Country.setText(MainPresenter.getInstance().getCurrentCountry());
+
+        if (MainPresenter.getInstance().getCitys() == null) {
+            MainPresenter.getInstance().loadCitys(this);
+        }
+
+        ///{{ Далле следует загрузка данных в спинеры.
 
         updateVisible();
     }
