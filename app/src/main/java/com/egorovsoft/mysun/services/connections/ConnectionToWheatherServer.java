@@ -5,6 +5,7 @@ import android.util.Log;
 import com.egorovsoft.mysun.MainPresenter;
 import com.egorovsoft.mysun.services.api.Weather;
 import com.egorovsoft.mysun.services.api.WeatherRequest;
+import com.egorovsoft.mysun.services.api.WeatherRequestFiveDay;
 
 import java.io.IOException;
 
@@ -74,6 +75,26 @@ public class ConnectionToWheatherServer {
         }
     }
 
+    public void refreshDataRetrofitLocationForecast(double latitude, double longitude){
+
+        Log.d(TAG, "refreshDataRetrofitLocationForecast: ");
+
+        Call<WeatherRequestFiveDay> call = weatherRequestCall.refreshDataRetrofitLocationForecast(Double.toString(latitude), Double.toString(longitude), "metric", API_KEY);
+        try {
+            Response<WeatherRequestFiveDay> weatherRequest = call.execute();
+            int error = weatherRequest.code();
+
+            if (weatherRequest.isSuccessful()) {
+                displayWeatherFiveDays(weatherRequest.body());
+            }
+            else{
+                setErrorFiveDay(error);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void refreshDataRetrofit(String city, String country){
         Log.d(TAG, "refreshDataRetrofit: ");
 
@@ -91,6 +112,38 @@ public class ConnectionToWheatherServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void refreshDataRetrofitForecast(String city, String country){
+        Log.d(TAG, "refreshDataRetrofitForecast: ");
+
+        Call<WeatherRequestFiveDay> call = weatherRequestCall.refreshDataRetrofitForecast(city + "," + country, "metric", API_KEY);
+        try {
+            Response<WeatherRequestFiveDay> weatherRequest = call.execute();
+            int error = weatherRequest.code();
+
+            if (weatherRequest.isSuccessful()) {
+                displayWeatherFiveDays(weatherRequest.body());
+            }
+            else{
+                setErrorFiveDay(error);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void displayWeatherFiveDays(WeatherRequestFiveDay weatherRequest) {
+        Log.d(TAG, "displayWeatherFiveDays: ");
+
+        WeatherRequest[] weather = weatherRequest.getList();
+        MainPresenter.getInstance().loadFiveDaysWeather(weather);
+    }
+
+    private void setErrorFiveDay(int error_code) {
+        Log.d(TAG, "setErrorFiveDay: " + error_code);
+
+        MainPresenter.getInstance().createFiveDayError(error_code);
     }
 
     private void SetError(int error_code) {

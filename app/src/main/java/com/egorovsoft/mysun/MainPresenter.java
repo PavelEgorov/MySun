@@ -10,7 +10,11 @@ import com.egorovsoft.mysun.observers.Publisher;
 import com.egorovsoft.mysun.preference.SPreference;
 import com.egorovsoft.mysun.recyclers.Rv_Five_Days;
 import com.egorovsoft.mysun.services.api.Citys;
+import com.egorovsoft.mysun.services.api.WeatherRequest;
 import com.egorovsoft.mysun.services.currentdata.UpdateWheatherService;
+
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class MainPresenter {
     private final static String TAG = "MainPresenter";
@@ -32,7 +36,9 @@ public class MainPresenter {
     public static final String EXTRA_USE_LOCATION = "USE_LOCATION";
     public static final String EXTRA_LOCATION_X = "LOCATION_X";
     public static final String EXTRA_LOCATION_Y = "LOCATION_Y";
+    public static final String EXTRA_FIVE_DAYS = "FIVE_DAYS";
 
+    public static final String EXTRA_DAY = "DAY";
 
     private boolean needLoadPreference;
     private int currentLanguage;
@@ -60,7 +66,8 @@ public class MainPresenter {
     private Citys citys;
 
     private boolean five_day;
-    private Rv_Five_Days[] rv_five_days;
+    private ArrayList<Rv_Five_Days> rv_five_days;
+    private TreeMap<String, Rv_Five_Days> future_five_days;
 
     private MainPresenter(){
         Log.d(TAG, "MainPresenter: ");
@@ -85,15 +92,17 @@ public class MainPresenter {
         permission_location = false;
 
         five_day = false;
-        rv_five_days = new Rv_Five_Days[5];
+        rv_five_days = new ArrayList<Rv_Five_Days>();
+        future_five_days = new TreeMap<String, Rv_Five_Days>();
 
         needLoadPreference = true;
     }
 
     public static MainPresenter getInstance() {
-        Log.d(TAG, "getInstance: ");
         synchronized (sync){
             if (instance == null) instance = new MainPresenter();
+
+            Log.d(TAG, instance.toString() + " getInstance: ");
             return instance;
         }
     }
@@ -115,6 +124,7 @@ public class MainPresenter {
             intentService.putExtra(MainPresenter.EXTRA_USE_LOCATION, getCurrentSettings());
             intentService.putExtra(MainPresenter.EXTRA_LOCATION_X, getCurrentLatitude());
             intentService.putExtra(MainPresenter.EXTRA_LOCATION_Y, getCurrentLongitude());
+            intentService.putExtra(MainPresenter.EXTRA_FIVE_DAYS, isFive_day());
 
             context.startService(intentService);
         }
@@ -146,6 +156,8 @@ public class MainPresenter {
         setPermission_enternet(preference.readPermissionInternet());
         setPermission_location(preference.readPermissionLocation());
 
+        setFive_day(preference.readFiveDays());
+
         setNeedLoadPreference(false);
 
         Publisher.getInstance().notifyCity(getCurrentCity());
@@ -165,7 +177,7 @@ public class MainPresenter {
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    preference.commit(currentSettings, currentLanguage, currentCountry, currentCity);
+                    preference.commit(currentSettings, currentLanguage, currentCountry, currentCity, permission_enternet, permission_location, five_day);
 
                     handler.post(new Runnable() {
                         @Override
@@ -408,6 +420,8 @@ public class MainPresenter {
         Publisher.getInstance().notifyHumidity(str_humidity);
         Publisher.getInstance().notifyWind(str_wind);
         Publisher.getInstance().notifyDescription(str_description);
+
+        Publisher.getInstance().notifyFiveDays(rv_five_days);
     }
 
     public void loadCitys(Context context) {
@@ -441,18 +455,91 @@ public class MainPresenter {
     public void setFive_day(boolean five_day) {
         Log.d(TAG, this.toString() + " setFive_day: " + five_day);
 
-        this.five_day = five_day;
+        synchronized (sync) {
+            if (!five_day){
+                future_five_days.clear();
+                rv_five_days.clear();
+            }
+
+            this.five_day = five_day;
+        }
     }
 
-    public Rv_Five_Days[] getRv_five_days() {
+    public ArrayList<Rv_Five_Days> getRv_five_days() {
         Log.d(TAG, this.toString() + " getRv_five_days: ");
 
-        return rv_five_days;
+        return (rv_five_days);
     }
 
-    public void setRv_five_days(Rv_Five_Days[] rv_five_days) {
-        Log.d(TAG, this.toString() + " setRv_five_days: ");
+    public void loadFiveDaysWeather(WeatherRequest[] weather){
+        Log.d(TAG, this.toString() + " loadFiveDaysWeather: ");
 
-        this.rv_five_days = rv_five_days;
+        if (rv_five_days == null) rv_five_days = new ArrayList<Rv_Five_Days>();
+        if (future_five_days == null) future_five_days = new TreeMap<>();
+
+        rv_five_days.clear();
+        future_five_days.clear();
+
+        for (WeatherRequest elem : weather
+             ) {
+            Rv_Five_Days five = new Rv_Five_Days();
+
+            five.setDescription(elem.getWeather()[0].getMain());
+            five.setTemperature(elem.getMain().getTemp());
+            five.setDay(elem.getDt_txt());
+
+            five.setWind(elem.getWind().getSpeed());
+            five.setHumidity(elem.getMain().getHumidity());
+
+            rv_five_days.add(five);
+
+            String key = five.getDay().substring(0, 10);
+
+            if (!future_five_days.containsKey(key)
+                    && future_five_days.size() < 4) future_five_days.put(key, five);
+        }
+    }
+
+    public void createFiveDayError(int error_code) {
+        Log.d(TAG, this.toString() + " createFiveDayError: ");
+
+        if (rv_five_days == null) return;
+
+        for (int i=0; i < rv_five_days.size(); i++){
+            Rv_Five_Days elem;
+
+            if (rv_five_days.get(i) == null) elem = new Rv_Five_Days();
+            else elem = rv_five_days.get(i);
+
+            elem.setDay("error");
+            elem.setTemperature(error_code);
+            elem.setDescription("");
+            elem.setWind(0);
+            elem.setHumidity(0);
+        }
+    }
+
+    public TreeMap<String, Rv_Five_Days> getFuture() {
+        Log.d(TAG, this.toString() + " getFuture: ");
+        return future_five_days;
+    }
+
+    public ArrayList<Rv_Five_Days> getRv_day(String day) {
+        ArrayList<Rv_Five_Days> weather = new ArrayList<>();
+        for (Rv_Five_Days w: rv_five_days
+             ) {
+            String key = w.getDay().substring(0, 10);
+            if (key.equals(day)){
+                Rv_Five_Days f = new Rv_Five_Days();
+                f.setDay(w.getDay());
+                f.setDescription(w.getDescription());
+                f.setTemperature(w.getTemperature());
+                f.setWind(w.getWind());
+                f.setHumidity(w.getHumidity());
+
+                weather.add(f);
+            }
+        }
+        return weather;
     }
 }

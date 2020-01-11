@@ -1,6 +1,7 @@
 package com.egorovsoft.mysun.services.connections;
 
 import com.egorovsoft.mysun.services.api.WeatherRequest;
+import com.egorovsoft.mysun.services.api.WeatherRequestFiveDay;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -18,8 +19,8 @@ interface OpenWheatherMapFactory {
     Call<WeatherRequest> refreshDataRetrofitLocation(@Query("lat") String lat, @Query("lon") String lon, @Query("units") String units, @Query("appid") String appid);
 
     @GET("data/2.5/forecast")
-    Call<WeatherRequest> refreshDataRetrofitForecast(@Query("q") String q, @Query("units") String units, @Query("appid") String appid);
+    Call<WeatherRequestFiveDay> refreshDataRetrofitForecast(@Query("q") String q, @Query("units") String units, @Query("appid") String appid);
 
     @GET("data/2.5/forecast")
-    Call<WeatherRequest> refreshDataRetrofitLocationForecast(@Query("lat") String lat, @Query("lon") String lon, @Query("units") String units, @Query("appid") String appid);
+    Call<WeatherRequestFiveDay> refreshDataRetrofitLocationForecast(@Query("lat") String lat, @Query("lon") String lon, @Query("units") String units, @Query("appid") String appid);
 }

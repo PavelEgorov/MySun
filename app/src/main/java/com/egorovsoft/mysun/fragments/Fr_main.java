@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.egorovsoft.mysun.R;
 import com.egorovsoft.mysun.observers.Observer;
 import com.egorovsoft.mysun.observers.Publisher;
+import com.egorovsoft.mysun.recyclers.Rv_Five_Days;
+
+import java.util.ArrayList;
 
 import androidx.fragment.app.Fragment;
 
@@ -94,5 +97,9 @@ public class Fr_main extends Fragment implements Observer {
         ((TextView)getActivity().findViewById(R.id.tv_description)).setText(
                 resid != 0? getResources().getText(resid):text
         );
+    }
+
+    @Override
+    public void updateFiveDays(ArrayList<Rv_Five_Days> five_days) {
     }
 }

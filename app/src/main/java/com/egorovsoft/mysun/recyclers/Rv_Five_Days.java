@@ -5,7 +5,26 @@ public class Rv_Five_Days {
     private float temperature;
     private String description;
 
+    private float wind;
+    private int humidity;
+
     private int id;
+
+    public float getWind() {
+        return wind;
+    }
+
+    public void setWind(float wind) {
+        this.wind = wind;
+    }
+
+    public int getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(int humidity) {
+        this.humidity = humidity;
+    }
 
     public String getDay() {
         return Day;

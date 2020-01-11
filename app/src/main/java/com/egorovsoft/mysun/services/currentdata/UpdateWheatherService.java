@@ -23,6 +23,7 @@ public class UpdateWheatherService extends Service {
     private double latitude;
     private double longitude;
     private Runnable runnable;
+    private boolean needFiveDays;
 
     @Nullable
     @Override
@@ -40,6 +41,8 @@ public class UpdateWheatherService extends Service {
         useLocation = intent.getIntExtra(MainPresenter.EXTRA_USE_LOCATION, MainPresenter.USE_LOCATION);
         latitude = intent.getDoubleExtra(MainPresenter.EXTRA_LOCATION_X, 0.0);
         longitude = intent.getDoubleExtra(MainPresenter.EXTRA_LOCATION_Y, 0.0);
+
+        needFiveDays = intent.getBooleanExtra(MainPresenter.EXTRA_FIVE_DAYS, false);
 
         ///{{ Запускаем определение локации
         if (useLocation == MainPresenter.USE_LOCATION) {
@@ -77,6 +80,9 @@ public class UpdateWheatherService extends Service {
                             Log.d(TAG, "run: USE_CITY");
                             ConnectionToWheatherServer conn = new ConnectionToWheatherServer();
                             conn.refreshDataRetrofit(city, country);
+                            if (needFiveDays) {
+                                conn.refreshDataRetrofitForecast(city, country);
+                            }
                             conn.close();
                         }
                         if (useLocation == MainPresenter.USE_LOCATION) {
@@ -84,6 +90,9 @@ public class UpdateWheatherService extends Service {
 
                             ConnectionToWheatherServer conn = new ConnectionToWheatherServer();
                             conn.refreshDataRetrofitLocation(latitude, longitude);
+                            if (needFiveDays) {
+                                conn.refreshDataRetrofitLocationForecast(latitude, longitude);
+                            }
                             conn.close();
                         }
                         if (useLocation == MainPresenter.USE_SENSOR) {

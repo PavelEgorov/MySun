@@ -1,5 +1,7 @@
 package com.egorovsoft.mysun.observers;
 
+import com.egorovsoft.mysun.recyclers.Rv_Five_Days;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,12 @@ public class Publisher {
     public void notifyDescription(String text) {
         for (Observer observer : observers) {
             observer.updateDescription(text);
+        }
+    }
+
+    public void notifyFiveDays(ArrayList<Rv_Five_Days> five_days) {
+        for (Observer observer : observers) {
+            observer.updateFiveDays(five_days);
         }
     }
 }

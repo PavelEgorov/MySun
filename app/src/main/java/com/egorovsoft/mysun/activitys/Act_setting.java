@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
@@ -25,6 +26,8 @@ public class Act_setting extends AppCompatActivity {
 
     private RadioButton rb_english;
     private RadioButton rb_russian;
+
+    private CheckBox fiveDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,8 @@ public class Act_setting extends AppCompatActivity {
             }
         });
 
+        fiveDays = findViewById(R.id.cb_five_day);
+
         loadData();
     }
 
@@ -116,6 +121,7 @@ public class Act_setting extends AppCompatActivity {
 
         MainPresenter.getInstance().setCurrentCity(et_City.getText().toString());
         MainPresenter.getInstance().setCurrentCountry(et_Country.getText().toString());
+        MainPresenter.getInstance().setFive_day(fiveDays.isChecked());
 
         MainPresenter.getInstance().savePreference(this);
 
@@ -159,6 +165,7 @@ public class Act_setting extends AppCompatActivity {
             MainPresenter.getInstance().loadCitys(this);
         }
 
+        fiveDays.setChecked(MainPresenter.getInstance().isFive_day());
         ///{{ Далле следует загрузка данных в спинеры.
 
         updateVisible();

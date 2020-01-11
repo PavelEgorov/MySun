@@ -14,4 +14,15 @@
         <item name="android:textSize">8pt</item>
         <item name="android:textColor">@color/colorText</item>
     </style>
+
+    <style name="first_data_card">
+        <item name="android:textSize">15pt</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="second_data_card">
+        <item name="android:textSize">6pt</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
 </resources>

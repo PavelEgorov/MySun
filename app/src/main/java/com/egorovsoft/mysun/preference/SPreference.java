@@ -16,6 +16,7 @@ public class SPreference {
     private static final String USE_LANGUAGE = "language";
     private static final String PM_INTERNET = "pm_internet";
     private static final String PM_LOCATION = "pm_location";
+    private static final String FIVE_DAY = "five_day";
 
     private String name;
     private SharedPreferences sharedPreferences;
@@ -41,7 +42,7 @@ public class SPreference {
         sharedPreferences = context.getSharedPreferences(this.name, context.MODE_PRIVATE);
     }
 
-    public void commit(int settings, int language, String country, String city){
+    public void commit(int settings, int language, String country, String city, boolean internet, boolean location, boolean fiveDay){
         Log.d(TAG, "commit: ");
 
         sharedPreferences.edit().putString(COUNTRY, country).commit();
@@ -49,8 +50,10 @@ public class SPreference {
         sharedPreferences.edit().putInt(USE_SETTINGS, settings).commit();
         sharedPreferences.edit().putInt(USE_LANGUAGE, language).commit();
 
-        sharedPreferences.edit().putBoolean(PM_INTERNET, MainPresenter.getInstance().isPermission_enternet()).commit();
-        sharedPreferences.edit().putBoolean(PM_LOCATION, MainPresenter.getInstance().isPermission_location()).commit();
+        sharedPreferences.edit().putBoolean(PM_INTERNET, internet).commit();
+        sharedPreferences.edit().putBoolean(PM_LOCATION, location).commit();
+
+        sharedPreferences.edit().putBoolean(FIVE_DAY, fiveDay).commit();
     }
 
     public String readCity(){
@@ -87,5 +90,11 @@ public class SPreference {
         Log.d(TAG, "readPermissionInternet: ");
 
         return sharedPreferences.getBoolean(PM_LOCATION, false);
+    }
+
+    public boolean readFiveDays(){
+        Log.d(TAG, "readFiveDays: ");
+
+        return sharedPreferences.getBoolean(FIVE_DAY, false);
     }
 }

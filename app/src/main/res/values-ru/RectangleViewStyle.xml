@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RectangleView">
+        <attr name="view_x" format="integer"/>
+        <attr name="view_y" format="integer"/>
+        <attr name="view_weight" format="integer"/>
+        <attr name="view_heigth" format="integer"/>
+    </declare-styleable>
+</resources>
