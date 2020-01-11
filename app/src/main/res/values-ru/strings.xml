@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error">подождите</string>
+    <string name="country">страна</string>
+    <string name="city">город</string>
+    <string name="use_city_name">поиск по городу</string>
+    <string name="use_sensor">использовать сенсоры</string>
+    <string name="use_location">использовать геолокацию</string>
+    <string name="settings">настройки</string>
+    <string name="language">язык</string>
+    <string name="english">english</string>
+    <string name="russian">русский</string>
+    <string name="back">назад</string>
+    <string name="wind">скорость ветра (м/с): </string>
+    <string name="humidity">влажность (%): </string>
+
+    <string name="Clouds">облачно</string>
+    <string name="Clear">ясно</string>
+    <string name="Tornado">ураган</string>
+    <string name="Squall">шквальный ветер</string>
+    <string name="Ash">пепел</string>
+    <string name="Dust">пыльно</string>
+    <string name="Sand">песчанная буря</string>
+    <string name="Fog">туман</string>
+    <string name="Haze">легкий туман</string>
+    <string name="Smoke">дымка</string>
+    <string name="Mist">легкий туман</string>
+    <string name="Snow">снег</string>
+    <string name="Rain">дождь</string>
+    <string name="Drizzle">мелкий дождь</string>
+    <string name="Thunderstorm">гроза</string>
+
+    <string name="use_5_day">погода на 5 дней</string>
+</resources>

@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name" translatable="false">MySun</string>
+
+    <string name="error">wait</string>
+    <string name="country">country</string>
+    <string name="city">city</string>
+    <string name="use_city_name">use city name</string>
+    <string name="use_sensor">use sensor</string>
+    <string name="use_location">use location</string>
+    <string name="settings">settings</string>
+    <string name="language">language</string>
+    <string name="english">english</string>
+    <string name="russian">russian</string>
+    <string name="back">back</string>
+    <string name="wind">wind speed (m/s): </string>
+    <string name="humidity">humidity (%): </string>
+
+    <string name="Clouds">clouds</string>
+    <string name="Clear">clear</string>
+    <string name="Tornado">tornado</string>
+    <string name="Squall">squall</string>
+    <string name="Ash">ash</string>
+    <string name="Dust">dust</string>
+    <string name="Sand">sand</string>
+    <string name="Fog">fog</string>
+    <string name="Haze">haze</string>
+    <string name="Smoke">smoke</string>
+    <string name="Mist">mist</string>
+    <string name="Snow">snow</string>
+    <string name="Rain">rain</string>
+    <string name="Drizzle">drizzle</string>
+    <string name="Thunderstorm">thunderstorm</string>
+
+    <string name="use_5_day">on 5 day</string>
+
+</resources>
